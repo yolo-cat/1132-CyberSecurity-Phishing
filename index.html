@@ -1,10 +1,44 @@
+<!-- HTML -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-tw">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+  <title>iLearn: 登入本網站</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-
+<div class="login-wrapper">
+  <div class="login-container">
+    <div class="left-column">
+      <div class="login-logo">
+        <img src="/img/moodle4_log.jpg" alt="iLearn">
+      </div>
+      <form class="login-form" action="https://ilearn.fcu.edu.tw/login/index.php" method="post">
+        <input type="hidden" name="logintoken" value="r6YZH7vsIEEbfDCc0qKXlCZk6Gd0WcAD">
+        <div class="form-group">
+          <label for="username">帳號</label>
+          <input type="text" name="username" id="username" placeholder="Only For Cyber Security Learning">
+        </div>
+        <div class="form-group">
+          <label for="password">密碼</label>
+          <input type="password" name="password" id="password" placeholder="密碼">
+        </div>
+        <button type="submit">登入</button>
+      </form>
+    </div>
+    <div class="right-column">
+      <p><strong>請使用NID帳號/密碼登入平台。</strong></p>
+      <p>
+        <strong>欲變更NID密碼，請連結至
+          <a href="https://netid.fcu.edu.tw/" target="_blank">
+            <img src="/img/nidlogo.png" alt="NID">
+          </a>
+        </strong>
+      </p>
+    </div>
+  </div>
+</div>
+<script src="/script.js"></script>
 </body>
 </html>
