@@ -27,6 +27,7 @@
         overflow: hidden;
         max-width: 900px;
         width: 100%;
+        padding: 2rem;
     }
 
     .left-column, .right-column {
@@ -50,7 +51,6 @@
 
     .login-form {
         width: 100%;
-        padding: 2rem;
     }
 
     .form-group {
