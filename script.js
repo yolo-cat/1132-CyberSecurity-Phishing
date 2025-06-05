@@ -1,113 +1,180 @@
 // script.js
 
-// 彈窗流程
-window.onload = function() {
+// SQLite 前端查詢整合
+let SQL, db;
+async function loadDB() {
+  SQL = await window.initSqlJs({ locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/${file}` });
+  const buf = await fetch('mydatabase.db').then(res => res.arrayBuffer());
+  db = new SQL.Database(new Uint8Array(buf));
+}
+
+// 查詢釣魚特徵
+function getPhishingFeatures() {
+  const res = db.exec('SELECT * FROM features');
+  return res[0] ? res[0].values.map(row => ({
+    description: row[1],
+    example_img: row[2],
+    example_desc: row[3]
+  })) : [];
+}
+// 查詢防範建議
+function getDefenseTips() {
+  const res = db.exec('SELECT * FROM defense');
+  return res[0] ? res[0].values.map(row => ({
+    tip: row[1],
+    resource_url: row[2]
+  })) : [];
+}
+// 查詢亂數考題
+function getRandomQuestions(n=5) {
+  const res = db.exec('SELECT * FROM questions ORDER BY RANDOM() LIMIT ' + n);
+  return res[0] ? res[0].values.map(row => ({
+    id: row[0],
+    question: row[1],
+    optA: row[2],
+    optB: row[3],
+    optC: row[4],
+    optD: row[5],
+    answer: row[6]
+  })) : [];
+}
+
+window.onload = async function() {
+  await loadDB();
+  // 彈窗流程
   const step1 = document.getElementById('phish-modal-step1');
   const step2 = document.getElementById('phish-modal-step2');
+  const step3 = document.getElementById('phish-modal-step3');
   const nextBtn = document.getElementById('next-step');
+  const toStep3 = document.getElementById('to-step3');
   const closeBtn = document.getElementById('close-modal');
-  // 初始顯示step1
-  step1.style.display = 'block';
-  step2.style.display = 'none';
-  // 下一步
-  nextBtn.onclick = function() {
-    step1.style.display = 'none';
-    step2.style.display = 'block';
-  };
-  // 關閉彈窗
-  closeBtn.onclick = function() {
-    step2.style.display = 'none';
-  };
+  const mainContent = document.getElementById('main-content');
 
-  // 模擬瀏覽器互動提示
+
+  // 取得釣魚特徵與範例
+  const featuresData = getPhishingFeatures();
+  const featuresList = document.getElementById('phish-features-list');
+  const examplesList = document.getElementById('phish-examples-list');
+  if (featuresList && featuresData) {
+    featuresList.innerHTML = '';
+    featuresData.forEach(f => {
+      const li = document.createElement('li');
+      li.textContent = f.description || f.desc;
+      featuresList.appendChild(li);
+      // 範例圖片與說明
+      if (examplesList && f.example_img && f.example_desc) {
+        const div = document.createElement('div');
+        div.className = 'example';
+        div.innerHTML = `<img src="${f.example_img}" alt="範例"><p>${f.example_desc}</p>`;
+        examplesList.appendChild(div);
+      }
+    });
+  }
+
+  // 首頁互動警告
   document.getElementById('browser-url').onclick = function() {
-    alert('網址可疑：ilearn.fake.edu.tw 並非官方網域，請小心！');
+    alert('警告：網址可疑，ilearn.fake.edu.tw 並非官方網域！');
   };
   document.getElementById('btn-back').onclick = function() {
-    alert('返回上一頁功能無效，這是釣魚網站常見手法。');
+    alert('警告：返回上一頁功能無效，這是釣魚網站常見手法。');
   };
   document.getElementById('btn-forward').onclick = function() {
-    alert('前進功能無效，這是釣魚網站常見手法。');
+    alert('警告：前進功能無效，這是釣魚網站常見手法。');
   };
   document.getElementById('btn-refresh').onclick = function() {
-    alert('重新整理無法解決安全問題，請檢查網址真偽。');
+    alert('警告：�����新整理無法解決安全問題，請檢查網址真偽。');
   };
-
-  // 攔截登入表單提交，彈出釣魚警示
+  document.getElementById('nid-link').onclick = function(e) {
+    e.preventDefault();
+    alert('警告：這是釣魚網站的模擬！真實情境中，此連結可能會帶你到另一個釣魚網站。');
+  };
+  document.getElementById('fake-bulletin').onclick = function() {
+    alert('警告：這是釣魚網站常見誘導語，請勿輕信緊急通知！');
+  };
   document.getElementById('fake-login-form').onsubmit = function(e) {
     e.preventDefault();
     alert('警告：這是釣魚網站的模擬，請勿在不明網站輸入真實帳號密碼！');
   };
 
-  // 彈窗三步驟流程
-  const toStep3 = document.getElementById('to-step3');
-  const step3 = document.getElementById('phish-modal-step3');
-  const quizFormModal = document.getElementById('quiz-form-modal');
-  const quizResultModal = document.getElementById('quiz-result-modal');
-  // step2 -> step3
-  toStep3.onclick = function() {
-    step2.style.display = 'none';
-    step3.style.display = 'block';
-  };
-  // step3互動式測驗
-  quizFormModal.onsubmit = function(e) {
-    e.preventDefault();
-    const ans = quizFormModal.querySelector('input[name="quiz"]:checked');
-    if (!ans) {
-      quizResultModal.textContent = '請先選擇一個答案。';
-      quizResultModal.style.color = 'red';
-      return;
-    }
-    if (ans.value === 'A') {
-      quizResultModal.textContent = '答對了！網址拼寫正確且為官方網域不是釣魚特徵。';
-      quizResultModal.style.color = 'green';
-    } else {
-      quizResultModal.textContent = '答錯了，請再想想。';
-      quizResultModal.style.color = 'red';
-    }
-  };
-  // step3完成按鈕
-  document.getElementById('close-modal').onclick = function() {
-    step3.style.display = 'none';
-  };
+  // 防範建議區塊AJAX
+  const defenseTipsData = getDefenseTips();
+  const defenseTipsList = document.getElementById('defense-tips-list');
+  if (defenseTipsList && defenseTipsData) {
+    defenseTipsList.innerHTML = '';
+    defenseTipsData.forEach(defense => {
+      const li = document.createElement('li');
+      if (defense.resource_url) {
+        const a = document.createElement('a');
+        a.href = defense.resource_url;
+        a.target = '_blank';
+        a.textContent = defense.tip;
+        li.appendChild(a);
+      } else {
+        li.textContent = defense.tip;
+      }
+      defenseTipsList.appendChild(li);
+    });
+  }
 
-  // AJAX 取得釣魚攻擊特徵，動態渲染到 step2
-  fetch('/api/features').then(r=>r.json()).then(data => {
-    const ul = step2.querySelector('ul');
-    if (ul && data.features) {
-      ul.innerHTML = '';
-      data.features.forEach(f => {
-        const li = document.createElement('li');
-        li.textContent = f;
-        ul.appendChild(li);
+  // 釣魚攻擊特徵自動彈窗與互動式測驗（Instruction.md/DB.md整合）
+  async function showFeaturePopup() {
+    await loadDB();
+    const features = getPhishingFeatures();
+    const popup = document.getElementById('feature-popup');
+    const list = document.getElementById('feature-popup-list');
+    list.innerHTML = '';
+    features.forEach(f => {
+      const li = document.createElement('li');
+      li.textContent = f.description;
+      list.appendChild(li);
+    });
+    popup.style.display = 'flex';
+  }
+  function hideFeaturePopup() {
+    document.getElementById('feature-popup').style.display = 'none';
+    document.getElementById('feature-mini').style.display = 'block';
+  }
+  function showQuizPopup() {
+    const quizDiv = document.getElementById('quiz-popup');
+    const form = document.getElementById('quiz-popup-form');
+    const resultDiv = document.getElementById('quiz-popup-result');
+    form.innerHTML = '';
+    resultDiv.textContent = '';
+    // 亂數出題
+    const questions = getRandomQuestions(5);
+    questions.forEach((q, idx) => {
+      const qDiv = document.createElement('div');
+      qDiv.innerHTML = `<b>Q${idx+1}：${q.question}</b><br>
+        <label><input type='radio' name='q${q.id}' value='A'> ${q.optA}</label>
+        <label><input type='radio' name='q${q.id}' value='B'> ${q.optB}</label>
+        <label><input type='radio' name='q${q.id}' value='C'> ${q.optC}</label>
+        <label><input type='radio' name='q${q.id}' value='D'> ${q.optD}</label><br><br>`;
+      form.appendChild(qDiv);
+    });
+    // 提交評分
+    form.onsubmit = function(e) {
+      e.preventDefault();
+      let score = 0;
+      questions.forEach(q => {
+        const userAns = form.querySelector(`input[name='q${q.id}']:checked`);
+        if (userAns && userAns.value === q.answer) score++;
       });
-    }
+      resultDiv.textContent = `你答對了 ${score} / ${questions.length} 題！`;
+      resultDiv.style.color = score === questions.length ? 'green' : 'red';
+    };
+    quizDiv.style.display = 'flex';
+  }
+  // DOMContentLoaded觸發彈窗與互動
+  window.addEventListener('DOMContentLoaded', () => {
+    showFeaturePopup();
+    document.getElementById('feature-popup-close').onclick = hideFeaturePopup;
+    document.getElementById('feature-mini').onclick = function() {
+      document.getElementById('feature-mini').style.display = 'none';
+      showQuizPopup();
+    };
+    document.getElementById('quiz-popup-close').onclick = function() {
+      document.getElementById('quiz-popup').style.display = 'none';
+      document.getElementById('feature-mini').style.display = 'block';
+    };
   });
-  // AJAX 取得防範措施，動態渲染到下方建議區塊
-  fetch('/api/defense').then(r=>r.json()).then(data => {
-    const antiPhishContent = document.querySelector('.anti-phish-content ul');
-    if (antiPhishContent && data.defense) {
-      antiPhishContent.innerHTML = '';
-      data.defense.forEach(tip => {
-        const li = document.createElement('li');
-        li.textContent = tip;
-        antiPhishContent.appendChild(li);
-      });
-    }
-  });
-
-  // 防範釣魚攻擊建議區塊展開/收合
-  // const antiPhishSection = document.getElementById('antiPhishSection');
-  // const antiPhishToggle = document.getElementById('antiPhishToggle');
-  // let antiPhishOpen = false;
-  // antiPhishToggle.onclick = function() {
-  //   antiPhishOpen = !antiPhishOpen;
-  //   if (antiPhishOpen) {
-  //     antiPhishSection.classList.add('open');
-  //     antiPhishToggle.textContent = '▼ 收合���範釣魚攻擊建議';
-  //   } else {
-  //     antiPhishSection.classList.remove('open');
-  //     antiPhishToggle.textContent = '▲ 展開防範釣魚攻擊建議';
-  //   }
-  // };
 };

@@ -5,117 +5,64 @@
   <title>登入 iLearn 模仿頁</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!--  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">-->
   <link rel="stylesheet" href="style.css">
+  <!-- 引入 sql.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.js"></script>
 </head>
 <body>
-<!-- 彈出提示 step.1 -->
-<div id="phish-modal-step1" class="phish-modal">
-  <div class="phish-modal-content">
-    <h2>這是一個釣魚測試網站</h2>
-    <p>本網站用於資安教學，介紹釣魚攻擊的概念與危害。請勿輸入真實帳號密碼。</p>
-    <button id="next-step">下一步</button>
-  </div>
-</div>
-<!-- 彈出提示 step.2 -->
-<div id="phish-modal-step2" class="phish-modal" style="display:none;">
-  <div class="phish-modal-content">
-    <h2>常見釣魚攻擊特徵</h2>
-    <ul>
-      <li>可疑的網址（如拼字錯誤、非官方網域）</li>
-      <li>要求輸入敏感資訊</li>
-      <li>偽造的品牌標誌或介面</li>
-      <li>緊急或威脅性語氣</li>
-    </ul>
-    <button id="to-step3">下一步</button>
-  </div>
-</div>
-<!-- 彈出提示 step.3 -->
-<div id="phish-modal-step3" class="phish-modal" style="display:none;">
-  <div class="phish-modal-content">
-    <h2>互動式測驗</h2>
-    <form id="quiz-form-modal">
-      <p>下列哪一項<strong>不是</strong>釣魚網站常見特徵？</p>
-      <label><input type="radio" name="quiz" value="A"> A. 網址拼寫正確且為官方網域</label><br>
-      <label><input type="radio" name="quiz" value="B"> B. 要求輸入帳號密碼</label><br>
-      <label><input type="radio" name="quiz" value="C"> C. 偽造品牌標誌</label><br>
-      <label><input type="radio" name="quiz" value="D"> D. 緊急語氣威脅</label><br>
-      <button type="submit">提交答案</button>
-    </form>
-    <div id="quiz-result-modal"></div>
-    <div class="phish-example">
-      <h3>範例圖片與說明</h3>
-      <img src="img/moodle4_log.jpg" alt="仿冒登入頁範例" style="max-width:220px;">
-      <p>範例：仿冒學校登入頁，網址可疑且有緊急提示。</p>
+
+<!-- 首頁內容（彈窗關閉後才顯示） -->
+<div id="main-content" style="display:none;">
+  <!-- 模擬瀏覽器外觀 -->
+  <div class="browser-mockup">
+    <div class="browser-bar">
+      <span class="browser-btn" id="btn-back">◀</span>
+      <span class="browser-btn" id="btn-forward">▶</span>
+      <span class="browser-btn" id="btn-refresh">⟳</span>
+      <input class="browser-url" id="browser-url" value="http://ilearn.fake.edu.tw/login" readonly>
     </div>
-    <button id="close-modal">完成</button>
   </div>
-</div>
-<!-- 模擬瀏覽器外觀 -->
-<div class="browser-mockup">
-  <div class="browser-bar">
-    <span class="browser-btn" id="btn-back">◀</span>
-    <span class="browser-btn" id="btn-forward">▶</span>
-    <span class="browser-btn" id="btn-refresh">⟳</span>
-    <input class="browser-url" id="browser-url" value="http://ilearn.fake.edu.tw/login" readonly>
-  </div>
-</div>
-<div class="login-wrapper">
-  <div class="login-container">
-    <div class="left-column">
-      <div class="login-logo">
-        <img src="img/moodle4_log.jpg" alt="iLearn">
-      </div>
-      <form class="login-form" action="#" id="fake-login-form">
-        <div class="form-group">
-          <input type="text" name="username" id="username" placeholder="帳號">
+  <div class="login-wrapper">
+    <div class="login-container">
+      <div class="left-column">
+        <div class="login-logo">
+          <img src="img/moodle4_log.jpg" alt="iLearn">
         </div>
-        <div class="form-group">
-          <input type="password" name="password" id="password" placeholder="密碼">
-        </div>
-        <button type="submit">登入</button>
-      </form>
-    </div>
-    <div class="right-column">
-      <div class="fake-bulletin">
-        <h3>【緊急】NID 密碼異常，請立即登入更換密碼！</h3>
-        <p>近期發現大量帳號異常登入，請務必於 24 小時內更換密碼，否則帳號將被鎖定。</p>
+        <form class="login-form" action="#" id="fake-login-form">
+          <div class="form-group">
+            <input type="text" name="username" id="username" placeholder="帳號">
+          </div>
+          <div class="form-group">
+            <input type="password" name="password" id="password" placeholder="密碼">
+          </div>
+          <button type="submit">登入</button>
+        </form>
       </div>
-      <p><strong>請使用 NID 帳號/密碼登入平台。</strong></p>
-      <p>
-        <strong>欲變更NID密碼，請連結至
-          <a href="index.html" target="_blank">
-            <img src="img/nidlogo.png" alt="NID">
-          </a>
-        </strong>
-      </p>
+      <div class="right-column">
+        <div class="fake-bulletin" id="fake-bulletin">
+          <h3>【緊急】NID 密碼異常，請立即登入更換密碼！</h3>
+          <p>近期發現大量帳號異常登入，請務必於 24 小時內更換密碼，否則帳號將被鎖定。</p>
+        </div>
+        <p><strong>請使用 NID 帳號/密碼登入平台。</strong></p>
+        <p>
+          <strong>欲變更NID密碼，請連結至
+            <a href="#" id="nid-link">
+              <img src="img/nidlogo.png" alt="NID">
+            </a>
+          </strong>
+        </p>
+      </div>
+    </div>
+    <div class="footer">
+      </div>
+      <p>Copyright © 2025 iLearn. All rights reserved.</p>
     </div>
   </div>
-  <div class="footer">
-<!--    <div class="anti-phish-section" id="antiPhishSection">-->
-<!--      <button class="anti-phish-toggle" id="antiPhishToggle">▲ 展開防範釣魚攻擊建議</button>-->
-<!--      <div class="anti-phish-content">-->
-<!--        <h3>防範釣魚攻擊建議</h3>-->
-<!--        <ul>-->
-<!--          <li>使用強密碼，避免重複使用相同密碼。</li>-->
-<!--          <li>啟用雙重驗證（2FA），提升帳號安全。</li>-->
-<!--          <li>定期更新密碼，避免密碼外洩風險。</li>-->
-<!--          <li>不要隨意點擊可疑連結或附件。</li>-->
-<!--          <li>遇到可疑網站，請直接關閉或聯絡資訊單位。</li>-->
-<!--        </ul>-->
-<!--        <h4>資安資源連結</h4>-->
-<!--        <ul>-->
-<!--          <li><a href="https://www.taiwan.gov.tw/" target="_blank">台灣政府入口網</a></li>-->
-<!--          <li><a href="https://www.moe.edu.tw/" target="_blank">教育部官方網站</a></li>-->
-<!--          <li><a href="https://www.twcert.org.tw/" target="_blank">台灣電腦網路危機處理暨協調中心(TWCERT/CC)</a></li>-->
-<!--          <li><a href="https://www.google.com/intl/zh-TW/chrome/privacy/whitepaper.html" target="_blank">Google安全瀏覽說明</a></li>-->
-<!--        </ul>-->
-<!--      </div>-->
-<!--    </div>-->
-    <p>Copyright © 2025 iLearn. All rights reserved.</p>
-    <script src="/script.js"></script>
-  </div>
+  <img id="feature-mini" src="test.png" alt="釣魚特徵" style="display:none;position:fixed;bottom:30px;right:30px;z-index:9999;cursor:pointer;width:60px;">
+<a id="feature-mini-link" href="phishing_features.html" style="display:none;position:fixed;bottom:30px;right:30px;z-index:10000;">
+  <img src="img/test.png" alt="釣魚特徵互動測驗" style="width:60px;">
+</a>
 </div>
+<script src="script.js"></script>
 </body>
 </html>

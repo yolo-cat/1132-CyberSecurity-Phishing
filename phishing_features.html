@@ -5,59 +5,255 @@
   <title>釣魚攻擊特徵｜釣釣王</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
+  <style>
+    .feature-header {
+      text-align: center;
+      padding: 2rem 0;
+      background-color: #f8f9fa;
+      border-bottom: 1px solid #dee2e6;
+    }
+    .feature-header h1 {
+      margin-top: 0;
+      color: #9b0c15;
+    }
+    .feature-list {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 20px;
+    }
+    .feature-list ul {
+      padding-left: 20px;
+    }
+    .feature-list li {
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+    .feature-examples {
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 20px;
+    }
+    .example {
+      border: 1px solid #dee2e6;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+    }
+    .example img {
+      max-width: 300px;
+      height: auto;
+      border-radius: 4px;
+    }
+    .example p {
+      flex: 1;
+      min-width: 250px;
+    }
+    .feature-quiz {
+      max-width: 800px;
+      margin: 2rem auto 4rem;
+      padding: 20px;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+    }
+    .feature-quiz form {
+      margin-top: 1rem;
+    }
+    .feature-quiz label {
+      display: block;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+    .feature-quiz button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .feature-quiz button:hover {
+      background-color: #0069d9;
+    }
+    #quiz-result {
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    .nav-btn {
+      display: inline-block;
+      padding: 10px 15px;
+      background: #6c757d;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+    .nav-btn:hover {
+      background: #5a6268;
+      text-decoration: none;
+      color: white;
+    }
+    .resources-section {
+      max-width: 800px;
+      margin: 2rem auto 4rem;
+      padding: 0 20px;
+    }
+  </style>
 </head>
 <body>
   <div class="feature-header">
     <h1>釣魚攻擊特徵</h1>
     <p>學習如何辨識釣魚網站，保護你的帳號安全！</p>
-    <a href="index.html">← 回首頁</a>
+    <a href="/" class="nav-btn">← 回首頁</a>
   </div>
+  
   <div class="feature-list">
-    <ul>
-      <li><strong>可疑網址：</strong>如拼字錯誤、非官方網域、網址過長或亂碼。</li>
-      <li><strong>緊急語氣：</strong>如「立即處理」、「否則帳號將被鎖定」等。</li>
-      <li><strong>拼寫錯誤：</strong>頁面上有明顯錯字或語法不通順。</li>
-      <li><strong>偽造品牌：</strong>仿冒官方標誌、顏色或介面設計。</li>
-      <li><strong>要求敏感資訊：</strong>要求輸入帳號、密碼、信用卡等。</li>
+    <h2>常見釣魚特徵</h2>
+    <ul id="features-list">
+      <!-- 由 script.js 動態載入 -->
     </ul>
   </div>
+  
   <div class="feature-examples">
     <h2>範例圖片與說明</h2>
     <div class="example">
       <img src="img/moodle4_log.jpg" alt="仿冒登入頁範例" style="max-width:300px;">
-      <p>範例：仿冒學校登入頁，網址可疑且有緊急提示。</p>
+      <p>範例：仿冒學校登入頁，網址可疑且有緊急提示。注意頁面設計與真實頁面相似，但網址和緊急提示是釣魚網站的典型特徵。</p>
+    </div>
+    <div id="dynamic-examples">
+      <!-- 動態添加的範例會顯示在這裡 -->
     </div>
   </div>
+  
   <div class="feature-quiz">
     <h2>互動式測驗</h2>
     <form id="quiz-form">
       <p>下列哪一項<strong>不是</strong>釣魚網站常見特徵？</p>
-      <label><input type="radio" name="quiz" value="A"> A. 網址拼寫正確且為官方網域</label><br>
-      <label><input type="radio" name="quiz" value="B"> B. 要求輸入帳號密碼</label><br>
-      <label><input type="radio" name="quiz" value="C"> C. 偽造品牌標誌</label><br>
-      <label><input type="radio" name="quiz" value="D"> D. 緊急語氣威脅</label><br>
+      <label><input type="radio" name="quiz" value="A"> A. 網址拼寫正確且為官方網域</label>
+      <label><input type="radio" name="quiz" value="B"> B. 要求輸入帳號密碼</label>
+      <label><input type="radio" name="quiz" value="C"> C. 偽造品牌標誌</label>
+      <label><input type="radio" name="quiz" value="D"> D. 緊急語氣威脅</label>
       <button type="submit">提交答案</button>
     </form>
     <div id="quiz-result"></div>
   </div>
+  
+  <div class="resources-section">
+    <h2>防範資源</h2>
+    <div id="dynamic-defense-tips">
+      <!-- 動態添加的防範措施會顯示在這裡 -->
+      <ul id="defense-list">
+        <!-- 由 script.js 動態載入 -->
+      </ul>
+    </div>
+  </div>
+  
+  <!-- 引入 sql.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.js"></script>
   <script>
-    document.getElementById('quiz-form').onsubmit = function(e) {
-      e.preventDefault();
-      const ans = document.querySelector('input[name="quiz"]:checked');
-      const result = document.getElementById('quiz-result');
-      if (!ans) {
-        result.textContent = '請先選擇一個答案。';
-        return;
-      }
-      if (ans.value === 'A') {
-        result.textContent = '答對了！網址拼寫正確且為官方網域不是釣魚特徵。';
-        result.style.color = 'green';
-      } else {
-        result.textContent = '答錯了，請再想想。';
-        result.style.color = 'red';
-      }
+    // SQLite 前端查詢
+    let SQL, db;
+    async function loadDB() {
+      SQL = await window.initSqlJs({ locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/${file}` });
+      const buf = await fetch('mydatabase.db').then(res => res.arrayBuffer());
+      db = new SQL.Database(new Uint8Array(buf));
+    }
+    // 查詢釣魚特徵
+    function getPhishingFeatures() {
+      const res = db.exec('SELECT * FROM features');
+      return res[0] ? res[0].values.map(row => ({
+        description: row[1],
+        example_img: row[2],
+        example_desc: row[3]
+      })) : [];
+    }
+    // 查詢防範建議
+    function getDefenseTips() {
+      const res = db.exec('SELECT * FROM defense');
+      return res[0] ? res[0].values.map(row => ({
+        tip: row[1],
+        resource_url: row[2]
+      })) : [];
+    }
+    // 查詢亂數考題
+    function getRandomQuestions(n=5) {
+      const res = db.exec('SELECT * FROM questions ORDER BY RANDOM() LIMIT ' + n);
+      return res[0] ? res[0].values.map(row => ({
+        id: row[0],
+        question: row[1],
+        optA: row[2],
+        optB: row[3],
+        optC: row[4],
+        optD: row[5],
+        answer: row[6]
+      })) : [];
+    }
+    // 頁面載入後渲染內容
+    window.onload = async function() {
+      await loadDB();
+      // 釣魚特徵
+      const features = getPhishingFeatures();
+      const featuresList = document.getElementById('features-list');
+      const examplesContainer = document.getElementById('dynamic-examples');
+      featuresList.innerHTML = '';
+      examplesContainer.innerHTML = '';
+      features.forEach(f => {
+        const li = document.createElement('li');
+        li.innerHTML = `<strong>${f.description.split('：')[0] || '特徵'}：</strong> ${f.description.split('：')[1] || f.description}`;
+        featuresList.appendChild(li);
+        if (f.example_img && f.example_desc) {
+          const exampleDiv = document.createElement('div');
+          exampleDiv.className = 'example';
+          exampleDiv.innerHTML = `<img src="${f.example_img}" alt="${f.description}" style="max-width:300px;"><p>${f.example_desc}</p>`;
+          examplesContainer.appendChild(exampleDiv);
+        }
+      });
+      // 防範建議
+      const defenseTips = getDefenseTips();
+      const defenseList = document.getElementById('defense-list');
+      defenseList.innerHTML = '';
+      defenseTips.forEach(d => {
+        const li = document.createElement('li');
+        if (d.resource_url) {
+          li.innerHTML = `<a href="${d.resource_url}" target="_blank">${d.tip}</a>`;
+        } else {
+          li.textContent = d.tip;
+        }
+        defenseList.appendChild(li);
+      });
+      // 互動式亂數測驗
+      const quizForm = document.getElementById('quiz-form');
+      const quizResult = document.getElementById('quiz-result');
+      const questions = getRandomQuestions(5);
+      quizForm.innerHTML = '';
+      questions.forEach((q, idx) => {
+        const qDiv = document.createElement('div');
+        qDiv.innerHTML = `<b>Q${idx+1}：${q.question}</b><br>
+          <label><input type='radio' name='q${q.id}' value='A'> ${q.optA}</label>
+          <label><input type='radio' name='q${q.id}' value='B'> ${q.optB}</label>
+          <label><input type='radio' name='q${q.id}' value='C'> ${q.optC}</label>
+          <label><input type='radio' name='q${q.id}' value='D'> ${q.optD}</label><br><br>`;
+        quizForm.appendChild(qDiv);
+      });
+      const submitBtn = document.createElement('button');
+      submitBtn.type = 'submit';
+      submitBtn.textContent = '提交答案';
+      quizForm.appendChild(submitBtn);
+      quizForm.onsubmit = function(e) {
+        e.preventDefault();
+        let score = 0;
+        questions.forEach(q => {
+          const userAns = quizForm.querySelector(`input[name='q${q.id}']:checked`);
+          if (userAns && userAns.value === q.answer) score++;
+        });
+        quizResult.textContent = `你答對了 ${score} / ${questions.length} 題！`;
+        quizResult.style.color = score === questions.length ? 'green' : 'red';
+      };
     };
   </script>
 </body>
 </html>
-

@@ -171,6 +171,8 @@
       box-shadow: 0 2px 16px rgba(0,0,0,0.2);
       max-width: 400px;
       text-align: center;
+      max-height: 80vh;
+      overflow-y: auto;
     }
     .phish-modal-content button {
       margin-top: 1.5rem;
@@ -180,6 +182,9 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
+    }
+    .phish-modal-content button:hover {
+      background: #1565c0;
     }
 
     /* 模擬瀏覽器樣式 */
@@ -225,52 +230,93 @@
     }
 
     /* 防範釣魚攻擊建議區塊（可收合） */
-.anti-phish-section {
-  background: #fffbe7;
-  border-top: 2px solid #e0c97f;
-  padding: 18px 24px 0 24px;
-  max-height: 56px;
-  overflow: hidden;
-  transition: max-height 0.5s cubic-bezier(.4,0,.2,1), padding-bottom 0.5s;
-  position: relative;
-}
-.anti-phish-section.open {
-  max-height: 600px;
-  padding-bottom: 18px;
-}
-.anti-phish-content {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s;
-  height: auto;
-}
-.anti-phish-section.open .anti-phish-content {
-  opacity: 1;
-  pointer-events: auto;
-}
-.anti-phish-toggle {
-  position: absolute;
-  left: 50%;
-  top: -18px;
-  transform: translateX(-50%);
-  background: #e0c97f;
-  color: #333;
-  border: none;
-  border-radius: 12px 12px 0 0;
-  padding: 2px 18px;
-  cursor: pointer;
-  font-size: 16px;
-  z-index: 10;
-  box-shadow: 0 -2px 6px rgba(0,0,0,0.08);
-}
-.anti-phish-section ul {
-  margin: 10px 0 0 0;
-  padding-left: 20px;
-}
-.anti-phish-section h3, .anti-phish-section h4 {
-  margin-top: 0;
-}
-@media (max-width: 700px) {
-  .browser-mockup { width: 98vw; }
-  .anti-phish-section { padding: 10px 4vw 0 4vw; }
-}
+    .anti-phish-section {
+      background: #fffbe7;
+      border-top: 2px solid #e0c97f;
+      padding: 18px 24px 0 24px;
+      max-height: 56px;
+      overflow: hidden;
+      transition: max-height 0.5s cubic-bezier(.4,0,.2,1), padding-bottom 0.5s;
+      position: relative;
+    }
+    .anti-phish-section.open {
+      max-height: 600px;
+      padding-bottom: 18px;
+    }
+    .anti-phish-content {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      height: auto;
+    }
+    .anti-phish-section.open .anti-phish-content {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .anti-phish-toggle {
+      position: absolute;
+      left: 50%;
+      top: -18px;
+      transform: translateX(-50%);
+      background: #e0c97f;
+      color: #333;
+      border: none;
+      border-radius: 12px 12px 0 0;
+      padding: 2px 18px;
+      cursor: pointer;
+      font-size: 16px;
+      z-index: 10;
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.08);
+    }
+    .anti-phish-section ul {
+      margin: 10px 0 0 0;
+      padding-left: 20px;
+    }
+    .anti-phish-section h3, .anti-phish-section h4 {
+      margin-top: 0;
+    }
+
+    /* 新增樣式 */
+    .fake-bulletin {
+      background-color: #fff3cd;
+      border-left: 4px solid #ffc107;
+      padding: 10px 15px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+      position: relative;
+    }
+    .fake-bulletin h3 {
+      color: #856404;
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+    .btn-learn {
+      display: inline-block;
+      background: #28a745;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      margin-top: 20px;
+      transition: background 0.3s;
+    }
+    .btn-learn:hover {
+      background: #218838;
+      text-decoration: none;
+      color: white;
+    }
+    .learn-more-btn {
+      margin-top: 20px;
+    }
+    .phish-example {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 700px) {
+      .browser-mockup { width: 98vw; }
+      .anti-phish-section { padding: 10px 4vw 0 4vw; }
+      .phish-modal-content { width: 90%; padding: 1.5rem; }
+    }

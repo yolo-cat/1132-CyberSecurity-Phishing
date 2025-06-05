@@ -1,16 +1,111 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-tw">
 <head>
   <meta charset="UTF-8">
-  <title>危險通知</title>
+  <title>危險通知 - 釣釣王</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f8d7da;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .danger-container {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(220, 53, 69, 0.3);
+      padding: 2rem;
+      max-width: 700px;
+      width: 90%;
+      text-align: center;
+    }
+    h1 {
+      color: #dc3545;
+      margin-top: 0;
+    }
+    .warning-icon {
+      font-size: 48px;
+      color: #dc3545;
+      margin-bottom: 1rem;
+    }
+    .action-buttons {
+      margin-top: 2rem;
+    }
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 0 10px;
+      transition: all 0.3s;
+    }
+    .btn-primary {
+      background-color: #007bff;
+      color: white;
+    }
+    .btn-primary:hover {
+      background-color: #0069d9;
+    }
+    .btn-danger {
+      background-color: #dc3545;
+      color: white;
+    }
+    .btn-danger:hover {
+      background-color: #c82333;
+    }
+    .what-happened {
+      background-color: #f9f9f9;
+      border-left: 4px solid #dc3545;
+      padding: 1rem;
+      margin: 1.5rem 0;
+      text-align: left;
+    }
+    .what-to-do {
+      background-color: #e2f0d9;
+      border-left: 4px solid #28a745;
+      padding: 1rem;
+      margin: 1.5rem 0;
+      text-align: left;
+    }
+  </style>
 </head>
 <body>
-<!--顯示文字：你的帳號密碼已經被釣魚網站盜用！-->
-<!--顯示文字：請立即變更密碼！-->
-<div>
-  <h1>你的帳號密碼已經被釣魚網站盜取！</h1>
-  <h1>請立即變更密碼！</h1>
+  <div class="danger-container">
+    <div class="warning-icon">⚠️</div>
+    <h1>你的帳號密碼已經被釣魚網站盜取！</h1>
+    <h2>請立即變更密碼！</h2>
+    
+    <div class="what-happened">
+      <h3>發生了什麼事？</h3>
+      <p>在真實釣魚攻擊中，當你在釣魚網站輸入帳號密碼後，攻擊者會：</p>
+      <ul>
+        <li>立即獲取你的帳號密碼</li>
+        <li>可能嘗試登入你的其他帳號（如果你重複使用相同密碼）</li>
+        <li>可能竊取你的個人資料或濫用你的帳號</li>
+      </ul>
+    </div>
+    
+    <div class="what-to-do">
+      <h3>我應該怎麼做？</h3>
+      <ol>
+        <li><strong>立即變更密碼</strong> - 盡快登入真正的官方網站修改密碼</li>
+        <li><strong>啟用雙重驗證</strong> - 進一步提升帳號安全</li>
+        <li><strong>檢查你的帳戶活動</strong> - 查看是否有異常活動</li>
+        <li><strong>更換其他相似密碼</strong> - 如果你在其他網站使用相同密碼</li>
+        <li><strong>學習辨識釣魚網站</strong> - 了解更多釣魚攻擊特徵</li>
+      </ol>
+    </div>
+    
+    <div class="action-buttons">
+      <a href="/" class="btn btn-primary">返回首頁</a>
+      <a href="/features" class="btn btn-danger">了解更多釣魚特徵</a>
+    </div>
   </div>
-
 </body>
 </html>
