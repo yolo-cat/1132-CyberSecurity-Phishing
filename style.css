@@ -154,14 +154,123 @@
 
     }
 
-    /*.eupopup-container-bottom, .eupopup-container-bottom , .eupopup-color-default {*/
-    /*    display: block;*/
-    /*    background-color: #3b2f30 !important;*/
-    /*    color: #fff !important;*/
-    /*    border-radius: 8px !important;*/
-    /*    text-align: center !important;*/
-    /*    font-size: 14px !important;*/
-    /*    position: fixed !important;*/
-    /*    padding: 10px 20px !important;*/
-    /*}*/
+    /* 彈窗樣式 */
+    .phish-modal {
+      position: fixed;
+      z-index: 9999;
+      left: 0; top: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .phish-modal-content {
+      background: #fff;
+      padding: 2rem 2.5rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+      max-width: 400px;
+      text-align: center;
+    }
+    .phish-modal-content button {
+      margin-top: 1.5rem;
+      padding: 0.5rem 2rem;
+      background: #1976d2;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
 
+    /* 模擬瀏覽器樣式 */
+    .browser-mockup {
+      width: 600px;
+      margin: 30px auto 0 auto;
+      border-radius: 8px 8px 0 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      background: #e0e0e0;
+    }
+    .browser-bar {
+      display: flex;
+      align-items: center;
+      padding: 8px 12px;
+      background: #f7f7f7;
+      border-radius: 8px 8px 0 0;
+    }
+    .browser-btn {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+      text-align: center;
+      margin-right: 8px;
+      background: #d1d1d1;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 16px;
+      user-select: none;
+      transition: background 0.2s;
+    }
+    .browser-btn:hover {
+      background: #bdbdbd;
+    }
+    .browser-url {
+      flex: 1;
+      padding: 4px 10px;
+      border: 1px solid #bbb;
+      border-radius: 4px;
+      background: #fff;
+      font-size: 15px;
+      margin-left: 8px;
+    }
+
+    /* 防範釣魚攻擊建議區塊（可收合） */
+.anti-phish-section {
+  background: #fffbe7;
+  border-top: 2px solid #e0c97f;
+  padding: 18px 24px 0 24px;
+  max-height: 56px;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(.4,0,.2,1), padding-bottom 0.5s;
+  position: relative;
+}
+.anti-phish-section.open {
+  max-height: 600px;
+  padding-bottom: 18px;
+}
+.anti-phish-content {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+  height: auto;
+}
+.anti-phish-section.open .anti-phish-content {
+  opacity: 1;
+  pointer-events: auto;
+}
+.anti-phish-toggle {
+  position: absolute;
+  left: 50%;
+  top: -18px;
+  transform: translateX(-50%);
+  background: #e0c97f;
+  color: #333;
+  border: none;
+  border-radius: 12px 12px 0 0;
+  padding: 2px 18px;
+  cursor: pointer;
+  font-size: 16px;
+  z-index: 10;
+  box-shadow: 0 -2px 6px rgba(0,0,0,0.08);
+}
+.anti-phish-section ul {
+  margin: 10px 0 0 0;
+  padding-left: 20px;
+}
+.anti-phish-section h3, .anti-phish-section h4 {
+  margin-top: 0;
+}
+@media (max-width: 700px) {
+  .browser-mockup { width: 98vw; }
+  .anti-phish-section { padding: 10px 4vw 0 4vw; }
+}
