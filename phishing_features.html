@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+  <title>釣魚攻擊特徵｜釣釣王</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="feature-header">
+    <h1>釣魚攻擊特徵</h1>
+    <p>學習如何辨識釣魚網站，保護你的帳號安全！</p>
+    <a href="index.html">← 回首頁</a>
+  </div>
+  <div class="feature-list">
+    <ul>
+      <li><strong>可疑網址：</strong>如拼字錯誤、非官方網域、網址過長或亂碼。</li>
+      <li><strong>緊急語氣：</strong>如「立即處理」、「否則帳號將被鎖定」等。</li>
+      <li><strong>拼寫錯誤：</strong>頁面上有明顯錯字或語法不通順。</li>
+      <li><strong>偽造品牌：</strong>仿冒官方標誌、顏色或介面設計。</li>
+      <li><strong>要求敏感資訊：</strong>要求輸入帳號、密碼、信用卡等。</li>
+    </ul>
+  </div>
+  <div class="feature-examples">
+    <h2>範例圖片與說明</h2>
+    <div class="example">
+      <img src="img/moodle4_log.jpg" alt="仿冒登入頁範例" style="max-width:300px;">
+      <p>範例：仿冒學校登入頁，網址可疑且有緊急提示。</p>
+    </div>
+  </div>
+  <div class="feature-quiz">
+    <h2>互動式測驗</h2>
+    <form id="quiz-form">
+      <p>下列哪一項<strong>不是</strong>釣魚網站常見特徵？</p>
+      <label><input type="radio" name="quiz" value="A"> A. 網址拼寫正確且為官方網域</label><br>
+      <label><input type="radio" name="quiz" value="B"> B. 要求輸入帳號密碼</label><br>
+      <label><input type="radio" name="quiz" value="C"> C. 偽造品牌標誌</label><br>
+      <label><input type="radio" name="quiz" value="D"> D. 緊急語氣威脅</label><br>
+      <button type="submit">提交答案</button>
+    </form>
+    <div id="quiz-result"></div>
+  </div>
+  <script>
+    document.getElementById('quiz-form').onsubmit = function(e) {
+      e.preventDefault();
+      const ans = document.querySelector('input[name="quiz"]:checked');
+      const result = document.getElementById('quiz-result');
+      if (!ans) {
+        result.textContent = '請先選擇一個答案。';
+        return;
+      }
+      if (ans.value === 'A') {
+        result.textContent = '答對了！網址拼寫正確且為官方網域不是釣魚特徵。';
+        result.style.color = 'green';
+      } else {
+        result.textContent = '答錯了，請再想想。';
+        result.style.color = 'red';
+      }
+    };
+  </script>
+</body>
+</html>
+
