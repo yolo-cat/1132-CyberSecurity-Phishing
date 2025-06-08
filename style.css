@@ -165,3 +165,116 @@
     /*    padding: 10px 20px !important;*/
     /*}*/
 
+    /* 彈出視窗樣式 */
+    .popup-modal {
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+    }
+    .popup-content {
+        background: #fff;
+        padding: 2rem 2.5rem;
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+        text-align: center;
+        font-size: 1.3rem;
+    }
+    .popup-content button {
+        margin-top: 1.5rem;
+        padding: 0.7rem 2.5rem;
+        font-size: 1.1rem;
+        border: none;
+        border-radius: 8px;
+        background: #9b0c15;
+        color: #fff;
+        cursor: pointer;
+    }
+    .popup-content button:hover {
+        background: #7a0912;
+    }
+
+    /* 多步驟釣魚辨識教學彈窗樣式（沿用 .popup-modal, .popup-content） */
+
+    /* 教學啟動按鈕樣式 */
+    .phishing-guide-btn {
+        margin-top: 18px;
+        padding: 0.7rem 2.5rem;
+        font-size: 1.1rem;
+        border: none;
+        border-radius: 8px;
+        background: #007bff;
+        color: #fff;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .phishing-guide-btn:hover {
+        background: #0056b3;
+    }
+
+    /* 模擬瀏覽器網址列樣式 */
+    .browser-bar {
+        display: flex;
+        align-items: center;
+        background: #e9ecef;
+        border-bottom: 1px solid #ccc;
+        padding: 8px 18px;
+        position: relative;
+        z-index: 2100;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    }
+    .browser-btn {
+        background: #fff;
+        border: 1px solid #bbb;
+        border-radius: 5px;
+        margin-right: 8px;
+        width: 32px;
+        height: 32px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .browser-btn:hover {
+        background: #f0f0f0;
+    }
+    .browser-url {
+        flex: 1;
+        padding: 7px 14px;
+        border: 1px solid #bbb;
+        border-radius: 7px;
+        font-size: 1.05rem;
+        background: #fff;
+        color: #333;
+        margin-left: 10px;
+        outline: none;
+    }
+
+    /* 憑證檢查按鈕已沿用 .browser-btn 樣式，無需額外新增 */
+
+    /* 登入次數提示彈窗按鈕樣式 */
+    #victim-modal .popup-content button {
+        margin: 1rem 0.7rem 0 0.7rem;
+        padding: 0.7rem 2.2rem;
+        font-size: 1.1rem;
+        border: none;
+        border-radius: 8px;
+        background: #007bff;
+        color: #fff;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    #victim-modal .popup-content button#victim-close-btn {
+        background: #6c757d;
+    }
+    #victim-modal .popup-content button#victim-close-btn:hover {
+        background: #495057;
+    }
+    #victim-modal .popup-content button#victim-quiz-btn {
+        background: #28a745;
+    }
+    #victim-modal .popup-content button#victim-quiz-btn:hover {
+        background: #1e7e34;
+    }

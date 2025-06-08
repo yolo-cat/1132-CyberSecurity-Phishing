@@ -10,13 +10,44 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<!-- 模擬瀏覽器網址列 -->
+<div class="browser-bar">
+  <button class="browser-btn" id="browser-back" title="後退">&#8592;</button>
+  <button class="browser-btn" id="browser-forward" title="前進">&#8594;</button>
+  <button class="browser-btn" id="browser-refresh" title="重新整理">&#8635;</button>
+  <button class="browser-btn" id="browser-cert" title="憑證檢查">&#128274;</button>
+  <input class="browser-url" type="text" value="https://ilearn.fcu.io/" readonly>
+</div>
+<!-- 新增彈出視窗 -->
+<div id="popup-modal" class="popup-modal">
+  <div class="popup-content">
+    <p>本網頁將教你如何分辨釣魚網站</p>
+    <button id="popup-close-btn">開始學習</button>
+  </div>
+</div>
+<!-- 多步驟釣魚辨識教學彈窗 -->
+<div id="phishing-guide-modal" class="popup-modal" style="display:none;">
+  <div class="popup-content" id="phishing-guide-content">
+    <!-- 內容由 JS 動態填入 -->
+    <p id="phishing-guide-text"></p>
+    <button id="phishing-guide-next-btn">下一步</button>
+  </div>
+</div>
+<!-- 新增：登入次數提示彈窗 -->
+<div id="victim-modal" class="popup-modal" style="display:none;">
+  <div class="popup-content">
+    <p id="victim-msg"></p>
+    <button id="victim-close-btn">關閉</button>
+    <button id="victim-quiz-btn">資安小測驗</button>
+  </div>
+</div>
 <div class="login-wrapper">
   <div class="login-container">
     <div class="left-column">
       <div class="login-logo">
         <img src="img/moodle4_log.jpg" alt="iLearn">
       </div>
-      <form class="login-form" action="notify.html">
+      <form class="login-form" id="phishing-login-form" action="notify.html">
         <div class="form-group">
           <input type="text" name="username" id="username" placeholder="帳號">
         </div>
@@ -25,6 +56,8 @@
         </div>
         <button type="submit">登入</button>
       </form>
+      <!-- 新增：釣魚辨識教學啟動按鈕 -->
+      <button id="start-phishing-guide" class="phishing-guide-btn">我要學習如何辨識釣魚網站</button>
     </div>
     <div class="right-column">
       <p><strong>本網站僅供資安教學使用，請勿用於其他用途。</strong></p>
