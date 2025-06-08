@@ -184,11 +184,16 @@ function showSummary() {
   else if (score >= 8) comment = '很棒！你對釣魚網站有高度警覺。';
   else if (score >= 5) comment = '不錯，但還有進步空間，請多加留意網路安全。';
   else comment = '建議加強資安意識，避免受騙。';
+  const username = document.getElementById('username').value.trim();
   summaryArea.innerHTML = `
     <span class="score">${score} / ${questions.length}</span>
     <div>答題完畢！</div>
     <div class="comment">${comment}</div>
-    <button id="restart-btn">重新測驗</button>
+    <div id="submit-score-area">
+      <button id="submit-score-btn">送出成績</button>
+      <button id="restart-btn">重新測驗</button>
+      <span id="submit-score-msg"></span>
+    </div>
   `;
   summaryArea.style.display = 'block';
   document.getElementById('explanation-area').style.display = 'none';
@@ -198,8 +203,85 @@ function showSummary() {
     score = 0;
     renderQuestion(current);
   });
+  // 送出成績
+  document.getElementById('submit-score-btn').addEventListener('click', () => {
+    if (!username) {
+      document.getElementById('submit-score-msg').textContent = '請輸入名稱';
+      return;
+    }
+    fetch('/api/scores', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: username, score })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          document.getElementById('submit-score-msg').textContent = '成績已送出！';
+          loadLeaderboard();
+          loadHistory();
+        } else {
+          document.getElementById('submit-score-msg').textContent = '送出失敗';
+        }
+      })
+      .catch(() => {
+        document.getElementById('submit-score-msg').textContent = '送出失敗';
+      });
+  });
+  loadLeaderboard();
+  loadHistory();
+}
+
+function loadLeaderboard() {
+  fetch('/api/scores?sortBy=score&order=desc')
+    .then(res => res.json())
+    .then(scores => {
+      const top10 = scores.slice(0, 10);
+      document.getElementById('leaderboard').innerHTML =
+        '<h3>排行榜（前10名）</h3>' +
+        '<ol>' +
+        top10.map(s => `<li>${s.name}：${s.score}分</li>`).join('') +
+        '</ol>';
+    });
+}
+
+function loadHistory() {
+  fetch('/api/scores?sortBy=time&order=desc')
+    .then(res => res.json())
+    .then(scores => {
+      document.getElementById('history').innerHTML =
+        '<h3>歷史成績</h3>' +
+        '<ul>' +
+        scores.map(s => `<li>${s.name}：${s.score}分（${new Date(s.time).toLocaleString()}）</li>`).join('') +
+        '</ul>';
+    });
+}
+
+function showLeaderboardModal() {
+  fetch('/api/scores?sortBy=score&order=desc')
+    .then(res => res.json())
+    .then(scores => {
+      const top10 = scores.slice(0, 10);
+      const list = document.getElementById('leaderboard-list');
+      list.innerHTML = top10.length
+        ? top10.map((s, i) => `<li>${s.name}：${s.score}分</li>`).join('')
+        : '<li>暫無資料</li>';
+      document.getElementById('leaderboard-modal').style.display = 'flex';
+    });
 }
 
 window.onload = function() {
   renderQuestion(current);
+  loadLeaderboard();
+  loadHistory();
+
+  // 排行榜彈窗事件
+  document.getElementById('show-leaderboard-btn').onclick = showLeaderboardModal;
+  document.getElementById('close-leaderboard').onclick = function() {
+    document.getElementById('leaderboard-modal').style.display = 'none';
+  };
+  // 點擊遮罩關閉
+  document.getElementById('leaderboard-modal').addEventListener('click', function(e) {
+    if (e.target === this) this.style.display = 'none';
+  });
 };

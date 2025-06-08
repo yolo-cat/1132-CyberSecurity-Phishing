@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["name", "score", "time"],
+    "properties": {
+      "name": { "type": "string" },
+      "score": { "type": "integer" },
+      "time": { "type": "integer" }
+    }
+  }
+}

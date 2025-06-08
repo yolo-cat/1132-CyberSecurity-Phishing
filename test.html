@@ -9,10 +9,24 @@
 <body>
   <!-- 回到首頁按鈕 -->
   <button id="back-home-btn" class="back-home-btn" onclick="location.href='index.html'">回到首頁</button>
+  <!-- 新增排行榜按鈕 -->
+  <button id="show-leaderboard-btn" class="leaderboard-btn">排行榜</button>
+  <!-- 排行榜彈窗 -->
+  <div id="leaderboard-modal" class="leaderboard-modal" style="display:none;">
+    <div class="leaderboard-modal-content">
+      <span id="close-leaderboard" class="close-leaderboard">&times;</span>
+      <h2>排行榜（前10名）</h2>
+      <ol id="leaderboard-list"></ol>
+    </div>
+  </div>
   <div class="test-wrapper">
     <div class="test-header">
       <h1>釣魚網站辨識小測驗</h1>
       <p>共 10 題，每題答完立即顯示正解與解析</p>
+      <div class="user-input-area">
+        <label for="username">請輸入您的名稱：</label>
+        <input type="text" id="username" name="username" maxlength="20" placeholder="暱稱/姓名">
+      </div>
     </div>
     <div class="test-content">
       <div id="question-area">
@@ -23,6 +37,9 @@
       </div>
       <div id="summary-area" style="display:none;">
         <!-- 顯示總分與評語 -->
+        <div id="score-summary"></div>
+        <div id="leaderboard"></div>
+        <div id="history"></div>
       </div>
     </div>
   </div>
