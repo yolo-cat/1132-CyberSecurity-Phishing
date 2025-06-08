@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>釣魚網站辨識小測驗</title>
+  <link rel="stylesheet" href="test.css">
+</head>
+<body>
+  <!-- 回到首頁按鈕 -->
+  <button id="back-home-btn" class="back-home-btn" onclick="location.href='index.html'">回到首頁</button>
+  <div class="test-wrapper">
+    <div class="test-header">
+      <h1>釣魚網站辨識小測驗</h1>
+      <p>共 10 題，每題答完立即顯示正解與解析</p>
+    </div>
+    <div class="test-content">
+      <div id="question-area">
+        <!-- 題目與選項由 JS 動態產生 -->
+      </div>
+      <div id="explanation-area" style="display:none;">
+        <!-- 顯示正確答案與解釋 -->
+      </div>
+      <div id="summary-area" style="display:none;">
+        <!-- 顯示總分與評語 -->
+      </div>
+    </div>
+  </div>
+  <script src="test.js"></script>
+</body>
+</html>

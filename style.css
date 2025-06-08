@@ -203,16 +203,28 @@
     .phishing-guide-btn {
         margin-top: 18px;
         padding: 0.7rem 2.5rem;
-        font-size: 1.1rem;
+        font-size: clamp(0.9rem, 2.5vw, 1.1rem);
         border: none;
         border-radius: 8px;
         background: #007bff;
         color: #fff;
         cursor: pointer;
         transition: background 0.2s;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 1.2;
     }
     .phishing-guide-btn:hover {
         background: #0056b3;
+    }
+    .phishing-guide-btn#start-quiz-btn,
+    .phishing-guide-btn[style*="background:#28a745"] {
+        background: #28a745;
+    }
+    .phishing-guide-btn#start-quiz-btn:hover,
+    .phishing-guide-btn[style*="background:#28a745"]:hover {
+        background: #1e7e34;
     }
 
     /* 模擬瀏覽器網址列樣式 */

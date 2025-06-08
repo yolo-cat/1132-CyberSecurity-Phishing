@@ -101,7 +101,15 @@ document.addEventListener('DOMContentLoaded', function() {
             victimModal.style.display = 'none';
         });
         victimQuizBtn.addEventListener('click', function() {
-            window.location.href = 'quiz.html';
+            window.location.href = 'test.html';
+        });
+    }
+
+    // 左側「資安小測驗」按鈕
+    var startQuizBtn = document.getElementById('start-quiz-btn');
+    if (startQuizBtn) {
+        startQuizBtn.addEventListener('click', function() {
+            window.location.href = 'test.html';
         });
     }
 });
